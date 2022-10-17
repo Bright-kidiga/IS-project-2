@@ -69,3 +69,15 @@ class LogoutView(APIView):
             'message': 'success'
         }
         return response
+
+
+    
+
+# user= request.user
+# if user.is_caregiver == True :
+
+
+# else user.is_caregiver = False
+# class Approval(APIView):
+#     Tasks.Approval = True 
+#     Tasks.save()
