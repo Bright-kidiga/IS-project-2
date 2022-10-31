@@ -53,6 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     is_caregiver = models.BooleanField(default=False)
+    is_approved  = models.BooleanField(default=False)
 
     objects = UserAccountManager()
 
