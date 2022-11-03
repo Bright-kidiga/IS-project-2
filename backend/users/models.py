@@ -34,6 +34,13 @@ class UserAccountManager(BaseUserManager):
         user.save(using = self._db)
 
         return user
+    def create_staff(self,email,name,password=None):
+        user = self.create_staff(email,name,password)
+
+        user.is_staff = True
+        user.save(using = self._db)
+
+        return user
 
     def create_superuser(self,email,name,password=None):
         user = self.create_user(email,name,password)

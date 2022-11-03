@@ -1,3 +1,4 @@
+from urllib import response
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
@@ -70,8 +71,11 @@ class LogoutView(APIView):
         }
         return response
 
-
-    
+class AllUsers(APIView):
+    def all():
+        allusers = User.objects.all()
+        response.data={"allusers":allusers}
+        return response   
 
 # user= request.user
 # if user.is_caregiver == True :
