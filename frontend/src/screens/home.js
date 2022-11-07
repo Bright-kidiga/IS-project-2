@@ -1,13 +1,17 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React, { Component } from 'react';
 import { View, Text, StatusBar, StyleSheet, Image, Dimensions, TouchableOpacity, Alert, TextInput, ScrollView } from 'react-native';
 import Card from '../components/card'
+import CaregiverProfile from './CaregiverProfile';
 
 const {width, height} = Dimensions.get('window')
 
+const drawer = createDrawerNavigator();
+
 export default function Home({ navigation }) {
-        // function getCaregiverList(){
-        //     return fetch('localhost:8000/api/')
-        // result = fetch('localhost:8000/api')
+        // const userInfo(){
+        //     return fetch('localhost:8000/api/user')
+        //     result = fetch('localhost:8000/api/user')
         //     .then((response) => response.json())
         //     .then((json) => {
         //         console.log(json, "json");
@@ -19,6 +23,11 @@ export default function Home({ navigation }) {
         // }
         return (
             <View style={styles.container}>
+             <NavigationContainer>
+                <Drawer.Navigator>
+                    <Drawer.Screen name="Home" Component={CaregiverProfile}/>
+                </Drawer.Navigator>
+            </NavigationContainer>
                 <View style={styles.titleContainer}>
                    <View style={styles.grt}>
                     <Text style={styles.greeting}>Welcome back </Text>
@@ -110,13 +119,13 @@ export default function Home({ navigation }) {
     },
     titleContainer: {
         margin: 15,
-        height: 70,
+        height: 120,
         verticalAlign: 'middle',
         flexDirection: 'row',
         width: width,
     },
     prfBtn: {
-        
+        marginTop: 40,
     },
     profileToggle: {
         height: 25,
@@ -124,7 +133,8 @@ export default function Home({ navigation }) {
         position: 'absolute',
     },
     grt: {
-        marginRight: 230,
+        marginRight: 200,
+        marginTop: 40,
         flexDirection: 'column',
     },
     greeting: {
@@ -168,11 +178,10 @@ export default function Home({ navigation }) {
         flexDirection: 'row',
         backgroundColor: '#fff',
         height: 120,
-        width: 380,
+        width: 350,
         marginTop: 15,
         borderRadius: 15,
-        verticalAlign: 'middle',
-        
+        verticalAlign: 'middle',  
     },
     cardInfo: {
         height: 80,

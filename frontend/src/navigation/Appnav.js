@@ -51,11 +51,11 @@ export default function App (){
     }
     return (
       <Stack.Navigator>
-         <Stack.Screen
+         {/* <Stack.Screen
           name= "home"
           component={Home}
           options={{headerShown: false}}
-        />
+        /> */}
         <Stack.Screen
           name= "homeCaregiver"
           component={homeCaregiver}

@@ -72,11 +72,17 @@ class LogoutView(APIView):
         return response
 
 class AllUsers(APIView):
-    def all():
+    def get():
         allusers = User.objects.all()
         response.data={"allusers":allusers}
-        return response   
+        return response 
 
+class Caregivers(APIView):
+    def get(self, request):
+        data = {
+            'name': '',
+        }
+        return Response(data)
 # user= request.user
 # if user.is_caregiver == True :
 

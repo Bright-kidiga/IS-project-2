@@ -80,6 +80,7 @@ container: {
 },
 profileContainer: {
     alignItems: 'center',
+    
 },
 profile: {
     height: 150,

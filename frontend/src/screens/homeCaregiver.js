@@ -21,16 +21,22 @@ export default class HomeCaregiver extends Component {
                  <View style={styles.titleContainer}>
                    <View style={styles.grt}>
                     <Text style={styles.greeting}>Welcome back </Text>
+                    <Text style={styles.name}>..name.. </Text>
                    </View>
-                    <TouchableOpacity style={styles.prfBtn}>
+                    <TouchableOpacity>
                     <Image
-                            style={styles.profileToggle}
+                            style={styles.profile}
                             source={{
                             uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',
                             }}
                         />
                     </TouchableOpacity>
                 </View>
+            <View style={styles.feedContainer}>
+             <View style={styles.buttonContainer}>
+                <Text style={styles.apply}>Make application</Text>
+             </View>
+            </View>
             </View>
         )}
  }
@@ -41,31 +47,43 @@ export default class HomeCaregiver extends Component {
     },
     titleContainer: {
         margin: 15,
+        marginTop: 25,
+        marginBottom: 60,
         height: 70,
         verticalAlign: 'middle',
         flexDirection: 'row',
         width: width,
     },
-    prfBtn: {
-        
-    },
-    profileToggle: {
-        height: 25,
-        width: 25,
+    profile: {
+        height: 70,
+        width: 70,
+        marginRight: 10,
+        marginTop: 30,
+        borderRadius: 50,
     },
     grt: {
-        marginRight: 230
+        marginTop: 40,
+        marginRight: 160
     },
     greeting: {
         fontSize: 20,
         fontStyle: 'bold',
     },
-    searchContainer: {
-        margin: 20,
-        verticalAlign: 'middle',
-        flexDirection: 'row',  
-        backgroundColor: '#ffcccc',
-        borderRadius: 15,
-        opacity: .8,
+    name: {
+        fontSize: 30,
+        fontStyle: 'bold',
     },
+    feedContainer: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    buttonContainer: {
+        height: 40,
+        width: 150,
+        backgroundColor: 'red',
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderwidth: 1,
+    }
 });
