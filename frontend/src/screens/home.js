@@ -1,33 +1,36 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { View, Text, StatusBar, StyleSheet, Image, Dimensions, TouchableOpacity, Alert, TextInput, ScrollView } from 'react-native';
 import Card from '../components/card'
 import CaregiverProfile from './CaregiverProfile';
+import { BASE_URL } from '../config';
 
 const {width, height} = Dimensions.get('window')
 
-const drawer = createDrawerNavigator();
+export default function Home({ navigation, props}) {
+      
+    const [data, setData] = useState([])
+    const [loading, setLoading] = useState(true)
 
-export default function Home({ navigation }) {
-        // const userInfo(){
-        //     return fetch('localhost:8000/api/user')
-        //     result = fetch('localhost:8000/api/user')
-        //     .then((response) => response.json())
-        //     .then((json) => {
-        //         console.log(json, "json");
-        //       return json;
-        //     })
-        //     .catch((error) => {
-        //       console.error(error);
-        //     });
-        // }
+    const loadData = () => {
+        fetch(`${BASE_URL}/caregivers`, {
+            method:"GET"
+        })
+
+        .then(resp => resp.json())
+        .then(data => {
+            setData(data)
+            setLoading(false)
+        })
+        .catch(error => Alert.alert("error"))
+    }
+
+    useEffect(() => {
+        loadData();
+    }, [])
+
         return (
             <View style={styles.container}>
-             <NavigationContainer>
-                <Drawer.Navigator>
-                    <Drawer.Screen name="Home" Component={CaregiverProfile}/>
-                </Drawer.Navigator>
-            </NavigationContainer>
                 <View style={styles.titleContainer}>
                    <View style={styles.grt}>
                     <Text style={styles.greeting}>Welcome back </Text>
@@ -120,7 +123,6 @@ export default function Home({ navigation }) {
     titleContainer: {
         margin: 15,
         height: 120,
-        verticalAlign: 'middle',
         flexDirection: 'row',
         width: width,
     },
@@ -147,14 +149,12 @@ export default function Home({ navigation }) {
     },
     searchContainer: {
         margin: 20,
-        verticalAlign: 'middle',
         flexDirection: 'row',  
         backgroundColor: '#ffcccc',
         borderRadius: 15,
         opacity: .8,
     },
     searchBar: {
-        verticalAlign: 'middle',
         padding: 10,
         height: 40, 
         width: 250,
@@ -181,7 +181,6 @@ export default function Home({ navigation }) {
         width: 350,
         marginTop: 15,
         borderRadius: 15,
-        verticalAlign: 'middle',  
     },
     cardInfo: {
         height: 80,
@@ -192,7 +191,6 @@ export default function Home({ navigation }) {
         width: 90,
         borderRadius: 15,
         margin: 15,
-        verticalAlign: 'middle',
     },
     name: {
         fontSize: 20,

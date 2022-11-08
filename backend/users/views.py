@@ -1,8 +1,10 @@
 from urllib import response
 from rest_framework.views import APIView
+from django.views.generic.list import ListView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from .serializers import UserSerializer
+from .serializers import caregiverSerializer
 from .models import User
 import jwt, datetime
 
@@ -71,18 +73,21 @@ class LogoutView(APIView):
         }
         return response
 
-class AllUsers(APIView):
-    def get():
-        allusers = User.objects.all()
-        response.data={"allusers":allusers}
-        return response 
+class caregiversList(APIView):
+    serializer = caregiverSerializer
 
-class Caregivers(APIView):
-    def get(self, request):
-        data = {
-            'name': '',
-        }
-        return Response(data)
+    def get_queryset(self):
+        users = User.objects.all()
+        return users
+
+    def get(self, request, *args, **kwargs):
+        
+        users = self.get_queryset()
+        serializer = caregiverSerializer(users, many=True)
+
+        return Response(serializer.data)
+
+
 # user= request.user
 # if user.is_caregiver == True :
 

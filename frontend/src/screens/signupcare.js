@@ -10,7 +10,7 @@ export default function SignupCare({ navigation }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [is_caregiver, setIsCaregiver] = useState('True');
+    const [is_caregiver, setIsCaregiver] = useState();
 
     const {register} = useContext(AuthContext);
         return (

@@ -7,3 +7,9 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
         fields = ('name', 'image')
+class ApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
+        fields = ('id', 'c_name', 'description', 'id_photo', 'age', 'is_approved')
+
+    

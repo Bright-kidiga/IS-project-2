@@ -33,9 +33,20 @@ export default class HomeCaregiver extends Component {
                     </TouchableOpacity>
                 </View>
             <View style={styles.feedContainer}>
-             <View style={styles.buttonContainer}>
+              <View style={styles.head}>
+                <View style={styles.jobs}>
+                    <Text style={styles.jobtext}>Jobs completed</Text>
+                    <Text style={styles.jobCount}>1244</Text>
+                </View>
+                <View style={styles.status}>
+                    <Text style={styles.jobCount}>Approved</Text>
+                </View>
+              </View>
+            <View style={styles.buttonContainer}>
+             <View style={styles.btn}>
                 <Text style={styles.apply}>Make application</Text>
              </View>
+            </View>
             </View>
             </View>
         )}
@@ -77,13 +88,35 @@ export default class HomeCaregiver extends Component {
         flex: 1,
         backgroundColor: '#fff',
     },
+    head: {
+        flexDirection: 'row',
+    },
+    jobs: {
+        height: 100,
+        margin: 15,
+        marginRight: 160,
+    },
+    jobCount: {
+        margin: 5,
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#60DCE4'
+    },
+    status: {
+        height: 100,
+        margin: 15,
+    },
     buttonContainer: {
+        flex: 1,
+        alignItems: 'center',
+        margin: 10
+    },
+    btn: {
         height: 40,
         width: 150,
         backgroundColor: 'red',
         borderRadius: 15,
         alignItems: 'center',
         justifyContent: 'center',
-        borderwidth: 1,
     }
 });
