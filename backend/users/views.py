@@ -16,6 +16,13 @@ class RegisterView(APIView):
         serializer.save()
         return Response(serializer.data)
 
+class RegisterCaregiverView(APIView):
+    def post(self, request):
+        serializer = caregiverSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
 class LoginView(APIView):
     def post(self, request):
         email = request.data['email']

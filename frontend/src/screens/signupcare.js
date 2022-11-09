@@ -10,9 +10,9 @@ export default function SignupCare({ navigation }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [is_caregiver, setIsCaregiver] = useState();
+    const [is_caregiver, setIsCaregiver] = useState(true);
 
-    const {register} = useContext(AuthContext);
+    const {registerCaregiver} = useContext(AuthContext);
         return (
             <View style={styles.container}>
                 <StatusBar hidden={true}/>
@@ -52,7 +52,7 @@ export default function SignupCare({ navigation }) {
                     />
                 </View>
                 <View style={styles.buttonContainer}>
-                   <TouchableOpacity onPress={() => register(
+                   <TouchableOpacity onPress={() => registerCaregiver(
                       name, email, password, is_caregiver
                    )}  >
                     <View style={styles.getStartedContainer}>

@@ -27,6 +27,26 @@ export const AuthProvider = ({children}) => {
             console.log(`Register Error ${e}`)
         });
     }
+    const registerCaregiver = (name, email, password, is_caregiver) => {
+        console.log({name, email, password, is_caregiver});
+        fetch(`${BASE_URL}/registerCaregiver`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({
+                name, email, password, is_caregiver
+            }),
+            mode: 'cors'
+        }).then(res => {
+            let userInfo = res.data;
+            console.log("caregiver registration successful")
+            console.log(userInfo);
+        }).catch(e => {
+            console.log(`Register Error ${e}`)
+        });
+    }
     const login = (email, password) => {
         console.log({email, password});
         fetch(`${BASE_URL}/login`, {
@@ -69,7 +89,7 @@ export const AuthProvider = ({children}) => {
     }
     
     return(
-        <AuthContext.Provider value={{register, login, logout}}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{register, registerCaregiver, login, logout}}>{children}</AuthContext.Provider>
     );
 
     

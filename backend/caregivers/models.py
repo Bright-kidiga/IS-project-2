@@ -15,6 +15,7 @@ class Application(models.Model):
     id_photo = models.ImageField(upload_to= imageUpload, blank=True, null=True)
     good_conduct = models.ImageField(upload_to= imageUpload, blank=True, null=True)
     age= models.IntegerField(max_length=100)
+    phone = models.TextField(max_length=100)
     is_approved = models.BooleanField(default=False)
     #categories
     is_nurse= models.BooleanField(default=False)

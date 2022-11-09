@@ -17,7 +17,7 @@ export default function App (){
   const {} = useContext(AuthContext);
 
   const Navigator = () => {
-    const isLoggedIn = true;
+    const isLoggedIn = false;
 
     if (!isLoggedIn){
       return (
