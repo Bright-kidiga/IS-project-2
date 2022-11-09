@@ -25,7 +25,7 @@ export default function App (){
             <Stack.Screen
               name="Onboarding"
               component={Onboarding}
-              // options={{headerShown: false}}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name="GetStarted"

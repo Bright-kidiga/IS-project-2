@@ -1,7 +1,7 @@
 from dataclasses import fields
 from pyexpat import model
 from rest_framework import serializers
-from .models import User
+from .models import User, Application
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,3 +31,13 @@ class caregiverSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
+        fields = ('image')
+
+class ApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
+        fields = ['description', 'id_photo', 'good_conduct', 'age', 'phone', 'is_nurse', 'is_babysitter', 'is_petcarer']

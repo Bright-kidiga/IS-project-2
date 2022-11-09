@@ -3,9 +3,8 @@ from rest_framework.views import APIView
 from django.views.generic.list import ListView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
-from .serializers import UserSerializer
-from .serializers import caregiverSerializer
-from .models import User
+from .serializers import UserSerializer, ApplicationSerializer, caregiverSerializer
+from .models import User, Application
 import jwt, datetime
 
 # Create your views here.
@@ -80,7 +79,14 @@ class LogoutView(APIView):
         }
         return response
 
-class caregiversList(APIView):
+class ApplyView(APIView):
+    def post(self, request):
+        serializer = ApplicationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+        
+class userList(APIView):
     serializer = caregiverSerializer
 
     def get_queryset(self):
@@ -93,8 +99,33 @@ class caregiversList(APIView):
         serializer = caregiverSerializer(users, many=True)
 
         return Response(serializer.data)
+class caregiverList(APIView):
+    serializer = caregiverSerializer
 
+    def get_queryset(self):
+        users = Application.objects.all()
+        return users
 
+    def get(self, request, *args, **kwargs):
+        
+        users = self.get_queryset()
+        serializer = caregiverSerializer(users, many=True)
+
+        return Response(serializer.data)
+# class caregiversonlyList(APIView):
+#     serializer = ApplicationSerializer
+
+#     def get_queryset(self, request):
+#         # caregivers = Application.objects.all()
+#         caregivers = Application.objects.filter(is_cgiver__is_caregiver__contains=True).filter(user=request.user)
+#         return caregivers
+
+#     def get(self, request, *args, **kwargs):
+        
+#         caregivers = self.get_queryset()
+#         serializer = ApplicationSerializer(caregivers, many=True)
+
+#         return Response(serializer.data)
 # user= request.user
 # if user.is_caregiver == True :
 
