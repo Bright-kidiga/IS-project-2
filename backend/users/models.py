@@ -73,7 +73,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
     
 class Application(models.Model):
-    is_cgiver = models.ForeignKey(User, on_delete=models.CASCADE)
+    cgiver = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(max_length=500)
     id_photo = models.ImageField(upload_to= imageUpload, blank=True, null=True)
     good_conduct = models.ImageField(upload_to= imageUpload, blank=True, null=True)

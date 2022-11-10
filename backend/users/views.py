@@ -85,7 +85,7 @@ class ApplyView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-        
+
 class userList(APIView):
     serializer = caregiverSerializer
 
@@ -109,7 +109,7 @@ class caregiverList(APIView):
     def get(self, request, *args, **kwargs):
         
         users = self.get_queryset()
-        serializer = caregiverSerializer(users, many=True)
+        serializer = ApplicationSerializer(users, many=True)
 
         return Response(serializer.data)
 # class caregiversonlyList(APIView):

@@ -40,4 +40,4 @@ class ImageSerializer(serializers.ModelSerializer):
 class ApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
-        fields = ['description', 'id_photo', 'good_conduct', 'age', 'phone', 'is_nurse', 'is_babysitter', 'is_petcarer']
+        fields = ['id', 'description', 'id_photo', 'good_conduct', 'age', 'phone', 'is_nurse', 'is_babysitter', 'is_petcarer']
