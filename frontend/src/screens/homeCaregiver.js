@@ -43,9 +43,11 @@ export default class HomeCaregiver extends Component {
                 </View>
               </View>
             <View style={styles.buttonContainer}>
-             <View style={styles.btn}>
-                <Text style={styles.apply}>Make application</Text>
-             </View>
+                   <TouchableOpacity onPress={() => navigation.navigate("application")}  >
+                    <View style={styles.btnContainer}>
+                        <Text style={styles.getStarted}>Log in</Text>
+                    </View>
+                   </TouchableOpacity>
             </View>
             </View>
             </View>

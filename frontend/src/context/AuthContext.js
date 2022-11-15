@@ -21,7 +21,7 @@ export const AuthProvider = ({children}) => {
             mode: 'cors'
         }).then(res => {
             let userInfo = res.data;
-            console.log("registration successful")
+            console.log("Client registration successful")
             console.log(userInfo);
         }).catch(e => {
             console.log(`Register Error ${e}`)

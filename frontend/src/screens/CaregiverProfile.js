@@ -29,39 +29,39 @@ export default function CaregiverProfile({ navigation }) {
                  <View style={styles.location}>
                  <Image
                             style={styles.loc}
-                            source={{
-                            uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',
-                            }}
+                            source={
+                                require('../../assets/images/placeholder.png')
+                                }
                  />
-                 <Text style={styles.loci}>gufgdfvjdf</Text>
+                 <Text style={styles.loci}>West Madaraka</Text>
                  </View>
             <View style={styles.performance}>
                 <View style={styles.icon}>
                 <Image
                             style={styles.ico}
-                            source={{
-                            uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',
-                            }}
+                            source={
+                                require('../../assets/images/star.png')
+                            }
                  />
-                 <Text>fuyasgfjasjd</Text>
+                 <Text>Rating</Text>
                 </View>
                 <View style={styles.icon}>
                 <Image
                             style={styles.ico}
-                            source={{
-                            uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',
-                            }}
+                            source={
+                                require('../../assets/images/briefcase.png')
+                            }
                  />
-                 <Text>fuyasgfjasjd</Text>
+                 <Text>Jobs</Text>
                 </View>
                 <View style={styles.icon}>
                 <Image
                             style={styles.ico}
-                            source={{
-                            uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',
-                            }}
+                            source={
+                                require('../../assets/images/hourglass.png')
+                            }
                  />
-                 <Text>fuyasgfjasjd</Text>
+                 <Text>Punctuality</Text>
                 </View>
             </View> 
             <View style={styles.analytics}>
@@ -69,6 +69,11 @@ export default function CaregiverProfile({ navigation }) {
             </View>         
             </View>
            </View>
+           <TouchableOpacity style={styles.btnContainer}>
+                    <View style={styles.getStartedContainer}>
+                        <Text style={styles.getStarted}>Hire now</Text>
+                    </View>
+            </TouchableOpacity>
         </View>
     )}
 
@@ -90,6 +95,7 @@ profile: {
 },
 profileInfo: {
     alignItems: 'center',
+    textAlignVertical: 'center',
 },
 name: {
     fontWeight: 'bold',
@@ -98,17 +104,18 @@ name: {
 location: {
     flexDirection: 'row',
     margin: 10,
-    verticalAlign: 'middle',
+    textVerticalAlign: 'center',
 },
 loc: {
-    height: 20,
-    width: 20,
-    margin: 15,
-    marginRight: 10,
+    height: 30,
+    width: 30,
+    margin: 10,
+    marginRight: .5,
 },
 loci: {
     fontSize: 20,
-    margin: 5,
+    fontWeight: 'semi-bold',
+    margin: 15,
 },
 performance: {
     height: 100,
@@ -123,7 +130,6 @@ icon: {
 ico: {
     height: 50,
     width: 50,
-    borderRadius: 50,
     margin: 10,
 },
 analytics: {
@@ -131,5 +137,26 @@ analytics: {
     margin: 5,
     height: 200,
     width: width,
-}
+},
+btnContainer: {
+    width: width,
+    alignItems: 'center',
+
+},
+getStartedContainer: {
+    width: 160,
+    height: 60,
+    borderColor: "#60DCE4",
+    borderWidth: 2,
+    borderRadius: 15,
+    margin: 10,
+    alignItems: "center",
+    justifyContent: "center",
+},
+getStarted: {
+    fontWeight: "bold",
+    fontSize: 25,
+    fontFamily: "Helvetica",
+    color: "#60DCE4",
+},
 });

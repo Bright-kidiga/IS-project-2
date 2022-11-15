@@ -1,39 +1,45 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View, Text, StatusBar, StyleSheet, Image, Dimensions, TouchableOpacity, Alert, TextInput, ScrollView } from 'react-native';
+import CaregiverProfile from '../screens/CaregiverProfile';
 
-export default function Card(props) {
-    return (
-        <View style={styles.card}>
-        <Image
-            style={styles.profile}
-            source={{
-            uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',
-            }}
-        />
-        <View style={styles.cardInfo}>
-            <Text style= { styles.name}>Padme Amidala</Text>
-            <View  style={styles.loci}>
-               <Image
-                    style={styles.loc}
-                    source={
-                        require('../../assets/images/bg.jpg')
-                    }
-                />
-              <Text style= { styles.location}>West Madaraka</Text>
-            </View>
-          <View style={styles.rt}> 
+export default class Card extends React.Component  {
+    render() { 
+        return (
+            <TouchableOpacity onPress={() => navigation.navigate("CaregiverProfile")}>
+            <View style={styles.card}>
             <Image
-                style={styles.star}
+                style={styles.profile}
                 source={{
                 uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',
                 }}
-            />  
-            <Text style= { styles.rating}>4.5/5</Text>
-            <Text style= { styles.rate}>Ksh 20/Hr</Text>
-          </View>
-        </View>
-        </View>
-    )}
+            />
+            <View style={styles.cardInfo}>
+                <Text style= { styles.name} >Padme Amidala</Text>
+                <View  style={styles.loci}>
+                   <Image
+                        style={styles.loc}
+                        source={
+                            require('../../assets/images/placeholder.png')
+                        }
+                    />
+                  <Text style= { styles.location}>West Madaraka</Text>
+                </View>
+              <View style={styles.rt}> 
+                <Image
+                    style={styles.star}
+                    source={
+                        require('../../assets/images/star.png')
+                    }
+                />  
+                <Text style= { styles.rating}>4.5/5</Text>
+                <Text style= { styles.rate}>Ksh 20/Hr</Text>
+              </View>
+            </View>
+            </View>
+        </TouchableOpacity> 
+        );
+      }
+    }
 const styles = StyleSheet.create({
     card: {
         flexDirection: 'row',

@@ -2,33 +2,54 @@ import { NavigationContainer } from '@react-navigation/native';
 import React, { Component, useState, useEffect } from 'react';
 import { View, Text, StatusBar, StyleSheet, Image, Dimensions, TouchableOpacity, Alert, TextInput, ScrollView } from 'react-native';
 import Card from '../components/card'
-import CaregiverProfile from './CaregiverProfile';
 import { BASE_URL } from '../config';
 
 const {width, height} = Dimensions.get('window')
 
 export default function Home({ navigation, props}) {
       
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(true)
+    // const [data, setData] = useState([])
+    // const [loading, setLoading] = useState(true)
 
-    const loadData = () => {
-        fetch(`${BASE_URL}/caregivers`, {
-            method:"GET"
-        })
+    // const loadData = () => {
+    //     fetch(`${BASE_URL}/userlist`, {
+    //         method:"GET"
+    //     })
 
-        .then(resp => resp.json())
-        .then(data => {
-            setData(data)
-            setLoading(false)
-        })
-        .catch(error => Alert.alert("error"))
-    }
+    //     .then(resp => resp.json())
+    //     .then(data => {
+    //         setData(data)
+    //         setLoading(false)
+    //     })
+    //     .catch(error => Alert.alert("error"))
+    // }
 
+    // useEffect(() => {
+    //     loadData();
+    // }, [])
+
+    const [usersData,setUsersData]=useState([])
+    const [fetchedState,setFetchedState]=useState(null);
+
+    const getData=async()=>{
+        try{
+          const response=await fetch(`${BASE_URL}/userlist`);
+          const data=await response.json();
+          setUsersData(data)
+        }
+        catch(error){
+          console.log(error)
+        }
+        finally{
+          setFetchedState(null);
+        }
+      }
+    
     useEffect(() => {
-        loadData();
-    }, [])
-
+        setFetchedState('loading')
+        setTimeout(()=>getData(),3000);
+      },[])
+    
         return (
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
@@ -39,16 +60,16 @@ export default function Home({ navigation, props}) {
                     <TouchableOpacity style={styles.prfBtn}>
                     <Image
                             style={styles.profileToggle}
-                            source={{
-                            uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',
-                            }}
+                            source={
+                                require('../../assets/images/nav.png')
+                            }
                         />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.searchContainer}>
                 <Image
                     style={styles.searchIcon}
-                    source={{ uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',}}
+                    source={ require('../../assets/images/search.png')}
                 />
                     <TextInput style={styles.searchBar}
                                placeholder= "Search..."
@@ -58,40 +79,12 @@ export default function Home({ navigation, props}) {
                 <View style={styles.feedContainer}>
                     {/* cards go here */}
                     <ScrollView style={styles.scrollView}>
-                   
-                    <TouchableOpacity onPress={() => navigation.navigate("CaregiverProfile")}>
-                        <View style={styles.card}>
-                        <Image
-                            style={styles.profile}
-                            source={{
-                            uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',
-                            }}
-                        />
-                        <View style={styles.cardInfo}>
-                            <Text style= { styles.name}>Padme Amidala</Text>
-                            <View  style={styles.loci}>
-                               <Image
-                                    style={styles.loc}
-                                    source={
-                                        require('../../assets/images/bg.jpg')
-                                    }
-                                />
-                              <Text style= { styles.location}>West Madaraka</Text>
-                            </View>
-                          <View style={styles.rt}> 
-                            <Image
-                                style={styles.star}
-                                source={{
-                                uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',
-                                }}
-                            />  
-                            <Text style= { styles.rating}>4.5/5</Text>
-                            <Text style= { styles.rate}>Ksh 20/Hr</Text>
-                          </View>
-                        </View>
-                        </View>
-                    </TouchableOpacity>
-                        <View style={styles.card}>
+                    {
+                        fetchedState ? <Text style={styles.loadingtext}>Loading Data...</Text> :
+                        usersData.map(_user=><Text style={styles.text} key={_user.id}>{_user.name}</Text>)
+                    }
+                    <Card/>
+                        {/* <View style={styles.card}>
                          <Text>caregiver name.</Text>
                         </View>
                         <View style={styles.card}>
@@ -108,7 +101,7 @@ export default function Home({ navigation, props}) {
                         </View>
                         <View style={styles.card}>
                          <Text>caregiver name.</Text>
-                        </View>
+                        </View> */}
                     </ScrollView>
                 </View>
             </View>
@@ -161,9 +154,9 @@ export default function Home({ navigation, props}) {
         fontSize: 20,
     },
     searchIcon: {
-        height: 30,
-        width: 30,
-        margin: 5,
+        height: 20,
+        width: 20,
+        margin: 10,
     },//fix
     feedContainer: {
         flex: 1,
