@@ -1,12 +1,14 @@
 import axios from 'axios';
-import React, {createContext, useContext} from 'react';
+import React, {createContext, useState} from 'react';
 import { BASE_URL } from '../config';
-
+import isLoggedIn from '../navigation/Appnav'
 
 export const AuthContext = createContext();
 
+
 export const AuthProvider = ({children}) => {
-    
+    const [userToken, setUserToken] = useState(null);
+    // const [isLoggedIn, setIsLoggedIn] = useState(null);
     const register = (name, email, password) => {
         console.log({name, email, password});
         fetch(`${BASE_URL}/register`, {
@@ -43,6 +45,7 @@ export const AuthProvider = ({children}) => {
             let userInfo = res.data;
             console.log("caregiver registration successful")
             console.log(userInfo);
+
         }).catch(e => {
             console.log(`Register Error ${e}`)
         });
@@ -63,6 +66,7 @@ export const AuthProvider = ({children}) => {
             let userInfo = res.data;
             console.log("login successful")
             console.log(userInfo);
+            // setIsLoggedIn(True)
         }).catch(e => {
             console.log(`Register Error ${e}`)
         });
@@ -87,9 +91,36 @@ export const AuthProvider = ({children}) => {
             console.log(`Register Error ${e}`)
         });
     }
+    const getUser=async()=>{
+        try{
+          const response=await fetch(`${BASE_URL}/userlist`);
+          const data=await response.json();
+          setUserData(data)
+        }
+        catch(error){
+          console.log(error)
+        }
+        finally{
+          setFetchState(null);
+        }
+    }
+
+    const getData=async()=>{
+        try{
+          const response=await fetch(`${BASE_URL}/userlist`);
+          const data=await response.json();
+          setUsersData(data)
+        }
+        catch(error){
+          console.log(error)
+        }
+        finally{
+          setFetchedState(null);
+        }
+    }
     
     return(
-        <AuthContext.Provider value={{register, registerCaregiver, login, logout}}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{register, getUser, getData,registerCaregiver, login, logout}}>{children}</AuthContext.Provider>
     );
 
     

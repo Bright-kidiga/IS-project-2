@@ -10,12 +10,12 @@ import homeCaregiver from '../screens/homeCaregiver';
 import Home from '../screens/home';
 import caregiverProfile from '../screens/CaregiverProfile';
 import application from '../screens/application';
-import { AuthContext } from '../context/AuthContext';
+import { AuthProvider,  } from '../context/AuthContext';
 
 const Stack = createStackNavigator();
 
 export default function App (){
-  const {} = useContext(AuthContext);
+  // const {} = useContext(AuthContext);
 
   const Navigator = () => {
     const isLoggedIn = true;
@@ -58,14 +58,14 @@ export default function App (){
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name= "homeCaregiver"
-          component={homeCaregiver}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
           name= "CaregiverProfile"
           component={caregiverProfile}
           // options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name= "homeCaregiver"
+          component={homeCaregiver}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name= "Caregiver Application"
@@ -76,8 +76,10 @@ export default function App (){
     )
   }
   return(
+  <AuthProvider>
     <NavigationContainer>
       <Navigator/>
     </NavigationContainer>
+  </AuthProvider>
   )
 }

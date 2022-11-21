@@ -4,17 +4,7 @@ import { View, Text, Switch, StatusBar, StyleSheet, Image, Dimensions, Touchable
 const {width, height} = Dimensions.get('window')
 
 export default function application({ navigation }) {
-    // function getCaregiverList(){
-    //     return fetch('localhost:8000/api/')
-    //     .then((response) => response.json())
-    //     .then((json) => {
-    //         console.log(json, "json");
-    //       return json;
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-    // }
+
     const [description, setDescription] = useState('');
     const [age, setAge] = useState('');
     const [phone, setPhone] = useState('');

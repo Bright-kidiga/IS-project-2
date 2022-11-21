@@ -10,7 +10,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin,BaseUs
 
 # Create your models here.
 def imageUpload(instance, filename):
-        return '/'.join(['images', str(instance.name), filename])
+        return '/'.join(['images', str(instance.id_photo), filename])
     # image storage needs work
 class UserAccountManager(BaseUserManager):
     def create_user(self,email,name,password=None):
@@ -77,7 +77,8 @@ class Application(models.Model):
     description = models.TextField(max_length=500)
     id_photo = models.ImageField(upload_to= imageUpload, blank=True, null=True)
     good_conduct = models.ImageField(upload_to= imageUpload, blank=True, null=True)
-    age= models.IntegerField(max_length=100)
+    location = models.TextField(max_length=300, blank=True, null=True)
+    age= models.IntegerField()
     phone = models.TextField(max_length=100)
     is_approved = models.BooleanField(default=False)
     #categories
@@ -85,7 +86,16 @@ class Application(models.Model):
     is_babysitter= models.BooleanField(default=False)
     is_petcarer= models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.c_name
-    def __repr__(self):
-        return repr(self.c_name)
+
+class Jobs(models.Model):
+    c_giver = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    review = models.TextField(max_length=500)
+    rating = models.FloatField()
+    location = models.TextField(max_length=300, blank=True, null=True)
+    timeStarted = models.DateTimeField(auto_now_add=True)
+    timeEnded = models.DateTimeField()
+    
+    #job categories
+    nurse= models.BooleanField(default=False)
+    babysitter= models.BooleanField(default=False)
+    petcarer= models.BooleanField(default=False)

@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from django.views.generic.list import ListView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
-from .serializers import UserSerializer, ApplicationSerializer, caregiverSerializer
-from .models import User, Application
+from .serializers import UserSerializer, ApplicationSerializer, caregiverSerializer, JobSerializer
+from .models import User, Application, Jobs
 import jwt, datetime
 
 # Create your views here.
@@ -86,11 +86,17 @@ class ApplyView(APIView):
         serializer.save()
         return Response(serializer.data)
 
+class postJob(APIView):
+    def post(self, request):
+        serializer = JobSerializer(data=request.data)
+        serializer.save()
+        return Response(serializer.data)
+
 class userList(APIView):
     serializer = caregiverSerializer
 
     def get_queryset(self):
-        users = User.objects.all()
+        users = User.objects.filter(is_caregiver= True)
         return users
 
     def get(self, request, *args, **kwargs):
@@ -112,20 +118,21 @@ class caregiverList(APIView):
         serializer = ApplicationSerializer(users, many=True)
 
         return Response(serializer.data)
-# class caregiversonlyList(APIView):
-#     serializer = ApplicationSerializer
+class jobsList(APIView):
+    serializer = JobSerializer
 
-#     def get_queryset(self, request):
-#         # caregivers = Application.objects.all()
-#         caregivers = Application.objects.filter(is_cgiver__is_caregiver__contains=True).filter(user=request.user)
-#         return caregivers
+    def get_queryset(self):
+        users = Jobs.objects.all()
+        return users
 
-#     def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         
-#         caregivers = self.get_queryset()
-#         serializer = ApplicationSerializer(caregivers, many=True)
+        users = self.get_queryset()
+        serializer = JobSerializer(users, many=True)
 
-#         return Response(serializer.data)
+        return Response(serializer.data)
+
+
 # user= request.user
 # if user.is_caregiver == True :
 

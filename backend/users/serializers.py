@@ -1,7 +1,7 @@
 from dataclasses import fields
 from pyexpat import model
 from rest_framework import serializers
-from .models import User, Application
+from .models import User, Application, Jobs
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,4 +40,9 @@ class ImageSerializer(serializers.ModelSerializer):
 class ApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
-        fields = ['id', 'description', 'id_photo', 'good_conduct', 'age', 'phone', 'is_nurse', 'is_babysitter', 'is_petcarer']
+        fields = ['cgiver', 'id', 'description', 'id_photo', 'good_conduct', 'age', 'phone', 'is_nurse', 'is_babysitter', 'is_petcarer', 'is_approved']
+
+class JobSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Jobs
+        fields = ['c_giver', 'id', 'review', 'rating', 'location', 'timeStarted', 'timeEnded', 'nurse', 'babysitter', 'petcarer']

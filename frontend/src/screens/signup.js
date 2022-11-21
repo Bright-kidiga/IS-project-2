@@ -1,6 +1,7 @@
 import React, { Component, useState, useContext } from 'react';
 import { View, Text, StatusBar, StyleSheet, Image, Dimensions, TouchableOpacity, TextInput, Button } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
+import {Appnav} from '../navigation/Appnav'
 import axios from 'axios';
 
 
@@ -10,7 +11,7 @@ export default function Signup({ navigation }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+  
     const {register} = useContext(AuthContext);
         return (
             <View style={styles.container}>

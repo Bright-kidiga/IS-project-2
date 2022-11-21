@@ -14,7 +14,7 @@ export default class Card extends React.Component  {
                 }}
             />
             <View style={styles.cardInfo}>
-                <Text style= { styles.name} >Padme Amidala</Text>
+                <Text style= { styles.name}>Padme Amidala</Text>
                 <View  style={styles.loci}>
                    <Image
                         style={styles.loc}

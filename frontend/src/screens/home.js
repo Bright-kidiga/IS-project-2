@@ -1,39 +1,22 @@
-import { NavigationContainer } from '@react-navigation/native';
-import React, { Component, useState, useEffect } from 'react';
-import { View, Text, StatusBar, StyleSheet, Image, Dimensions, TouchableOpacity, Alert, TextInput, ScrollView } from 'react-native';
-import Card from '../components/card'
+import React, { Component, useState, useEffect,useContext} from 'react';
+import { View, Text, StatusBar, StyleSheet, Image, Dimensions, TouchableOpacity, Alert, TextInput, FlatList } from 'react-native';
 import { BASE_URL } from '../config';
+import { AuthContext } from '../context/AuthContext';
 
 const {width, height} = Dimensions.get('window')
 
+
 export default function Home({ navigation, props}) {
-      
-    // const [data, setData] = useState([])
-    // const [loading, setLoading] = useState(true)
-
-    // const loadData = () => {
-    //     fetch(`${BASE_URL}/userlist`, {
-    //         method:"GET"
-    //     })
-
-    //     .then(resp => resp.json())
-    //     .then(data => {
-    //         setData(data)
-    //         setLoading(false)
-    //     })
-    //     .catch(error => Alert.alert("error"))
-    // }
-
-    // useEffect(() => {
-    //     loadData();
-    // }, [])
 
     const [usersData,setUsersData]=useState([])
     const [fetchedState,setFetchedState]=useState(null);
+    const [appData,setAppData]=useState([])
+    const [user,setUserData]=useState([])
+    const [fetchState,setFetchState]=useState(null);
 
     const getData=async()=>{
         try{
-          const response=await fetch(`${BASE_URL}/userlist`);
+          const response=await fetch(`${BASE_URL}/caregiverlist`);
           const data=await response.json();
           setUsersData(data)
         }
@@ -50,20 +33,64 @@ export default function Home({ navigation, props}) {
         setTimeout(()=>getData(),3000);
       },[])
     
+      const getCareData=async()=>{
+        try{
+          const response=await fetch(`${BASE_URL}/applications`);
+          const data=await response.json();
+          setAppData(data)
+        }
+        catch(error){
+          console.log(appData)
+        }
+        finally{
+          setFetchedState(null);
+        }
+      }
+    
+    useEffect(() => {
+        setFetchedState('loading')
+        setTimeout(()=>getCareData(),3000);
+      },[])
+  
+      const getUser=async()=>{
+          try{
+            const response=await fetch(`${BASE_URL}/user`);
+            const data=await response.json();
+            setUserData(data)
+          }
+          catch(error){
+            console.log(error)
+          }
+          finally{
+            setFetchState(null);
+          }
+        }
+      
+      useEffect(() => {
+          setFetchState('loading')
+          setTimeout(()=>getUse(),3000);
+        },[])
+
+      
         return (
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
                    <View style={styles.grt}>
                     <Text style={styles.greeting}>Welcome back </Text>
-                    <Text style={styles.name}>..name.. </Text>
+                    {
+                        fetchState ? <Text style={styles.name}>Loading Data...</Text> :
+                        user.map(_user=><Text style={styles.name} key={_user.id}>{_user.name}</Text>)
+                    }
                    </View>
-                    <TouchableOpacity style={styles.prfBtn}>
+                   <TouchableOpacity onPress={() => navigation.navigate("")}>
+                    <View style={styles.prfBtn}>
                     <Image
                             style={styles.profileToggle}
                             source={
                                 require('../../assets/images/nav.png')
                             }
                         />
+                    </View>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.searchContainer}>
@@ -78,31 +105,65 @@ export default function Home({ navigation, props}) {
                 </View>
                 <View style={styles.feedContainer}>
                     {/* cards go here */}
-                    <ScrollView style={styles.scrollView}>
-                    {
-                        fetchedState ? <Text style={styles.loadingtext}>Loading Data...</Text> :
-                        usersData.map(_user=><Text style={styles.text} key={_user.id}>{_user.name}</Text>)
-                    }
-                    <Card/>
-                        {/* <View style={styles.card}>
-                         <Text>caregiver name.</Text>
-                        </View>
-                        <View style={styles.card}>
-                         <Text>caregiver name.</Text>
-                        </View>
-                        <View style={styles.card}>
-                         <Text>caregiver name.</Text>
-                        </View>
-                        <View style={styles.card}>
-                         <Text>caregiver name.</Text>
-                        </View>
-                        <View style={styles.card}>
-                         <Text>caregiver name.</Text>
-                        </View>
-                        <View style={styles.card}>
-                         <Text>caregiver name.</Text>
-                        </View> */}
-                    </ScrollView>
+                 <View style={styles.categoriesContainer}>
+                   <TouchableOpacity>
+                    <View style={styles.category}>
+                        <Text>All</Text>
+                    </View>
+                   </TouchableOpacity>
+                   <TouchableOpacity>
+                    <View style={styles.category}>
+                        <Text>Nurse</Text>
+                    </View>
+                   </TouchableOpacity>
+                   <TouchableOpacity>
+                    <View style={styles.category}>
+                        <Text>Babysitter</Text>
+                    </View>
+                   </TouchableOpacity>
+                   <TouchableOpacity>
+                    <View style={styles.category}>
+                        <Text>Petcare</Text>
+                    </View>
+                   </TouchableOpacity>
+                 </View>
+                    <FlatList
+                        data={usersData || appData} 
+                        renderItem={({ item }) => (
+                            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("CaregiverProfile")}>
+                                <Image
+                                    style={styles.profile}
+                                    source={{
+                                    uri: 'https://images.pexels.com/photos/8067738/pexels-photo-8067738.jpeg?auto=compress&cs=tinysrgb&w=600',
+                                    }}
+                                />
+                                <View style={styles.cardInfo}>
+                                    <Text style= { styles.name}>{item.name}</Text>
+                                    <View  style={styles.loci}>
+                                    <Image
+                                            style={styles.loc}
+                                            source={
+                                                require('../../assets/images/placeholder.png')
+                                            }
+                                        />
+                                    <Text style= { styles.location}>West Madaraka</Text>
+                                    </View>
+                                <View style={styles.rt}> 
+                                    <Image
+                                        style={styles.star}
+                                        source={
+                                            require('../../assets/images/star.png')
+                                        }
+                                    />  
+                                    <Text style= { styles.rating}>4.5/5</Text>
+                                    <Text style= { styles.rate}>Ksh 20/Hr</Text>
+                                </View>
+                                </View>
+                                
+                            </TouchableOpacity> 
+                        )}
+                        
+                    />
                 </View>
             </View>
         )}
@@ -111,6 +172,8 @@ export default function Home({ navigation, props}) {
     container: {
         flex: 1,
         backgroundColor: "#edf7f8",
+        height:height,
+        width: width
         // fontFamily: Poppins,
     },
     titleContainer: {
@@ -225,5 +288,15 @@ export default function Home({ navigation, props}) {
     rt: {
         marginTop: 20,
         flexDirection: 'row',
+    },
+    categoriesContainer: {
+        flexDirection: 'row',
+    },
+    category: {
+        margin: 8,
+        borderRadius: 15,
+        backgroundColor: '#fff',
+        width: 70,
+        alignItems: "center",
     }
 });
