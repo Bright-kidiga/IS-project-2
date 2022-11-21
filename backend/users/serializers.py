@@ -46,3 +46,13 @@ class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jobs
         fields = ['c_giver', 'id', 'review', 'rating', 'location', 'timeStarted', 'timeEnded', 'nurse', 'babysitter', 'petcarer']
+
+# class CaregiverCountSerializer(serializers.ModelSerializer):
+#     user_count = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = User
+#         fields = ( 'user_count',)   
+
+#     def get_user_count(self, obj):
+#         return User.objects.count()

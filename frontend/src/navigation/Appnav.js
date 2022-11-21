@@ -8,7 +8,7 @@ import GetStarted from '../screens/GetStarted';
 import SignupCare from '../screens/signupcare';
 import homeCaregiver from '../screens/homeCaregiver';
 import Home from '../screens/home';
-import caregiverProfile from '../screens/CaregiverProfile';
+import CaregiverProfile from '../screens/CaregiverProfile';
 import application from '../screens/application';
 import { AuthProvider,  } from '../context/AuthContext';
 
@@ -52,21 +52,21 @@ export default function App (){
     }
     return (
       <Stack.Navigator>
-         <Stack.Screen
+         {/* <Stack.Screen
           name= "home"
           component={Home}
           options={{headerShown: false}}
         />
         <Stack.Screen
           name= "CaregiverProfile"
-          component={caregiverProfile}
+          component={CaregiverProfile}
           // options={{headerShown: false}}
         />
         <Stack.Screen
           name= "homeCaregiver"
           component={homeCaregiver}
           options={{headerShown: false}}
-        />
+        /> */}
         <Stack.Screen
           name= "Caregiver Application"
           component={application}

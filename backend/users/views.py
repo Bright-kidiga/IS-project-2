@@ -131,7 +131,51 @@ class jobsList(APIView):
         serializer = JobSerializer(users, many=True)
 
         return Response(serializer.data)
+class clientCount(APIView):
+    def get_queryset(self):
+        users = User.objects.filter(is_caregiver= False).count()
+        return users
+    def get(self, request, *args, **kwargs):
+        
+        users = self.get_queryset()
+        return Response(users)
 
+class caregiverCount(APIView):
+    def get_queryset(self):
+        users = User.objects.filter(is_caregiver= True).count()
+        return users
+    def get(self, request, *args, **kwargs):
+        
+        users = self.get_queryset()
+        return Response(users)
+
+class jobCount(APIView):
+    def get_queryset(self):
+        jobs = Jobs.objects.count()
+        return jobs
+    def get(self, request, *args, **kwargs):
+        
+        jobs = self.get_queryset()
+        return Response(jobs)
+    
+class applicationCount(APIView):
+    def get_queryset(self):
+        applications = Application.objects.count()
+        return applications
+    def get(self, request, *args, **kwargs):
+        
+        applications = self.get_queryset()
+        return Response(applications)
+
+class approvedApplicationCount(APIView):
+    def get_queryset(self):
+        applications = Application.objects.filter(is_approved= True).count()
+        return applications
+    def get(self, request, *args, **kwargs):
+        
+        applications = self.get_queryset()
+        return Response(applications)
+    
 
 # user= request.user
 # if user.is_caregiver == True :

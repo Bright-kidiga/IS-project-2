@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from .models import User, Application, Jobs
 
 
@@ -6,5 +7,7 @@ from .models import User, Application, Jobs
 admin.site.register(User)
 admin.site.register(Application)
 admin.site.register(Jobs)
+
+admin.site.unregister(Group)
 
 
