@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {createContext, useState} from 'react';
+import AsyncStorage  from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../config';
 import isLoggedIn from '../navigation/Appnav'
 
@@ -84,12 +85,42 @@ export const AuthProvider = ({children}) => {
             mode: 'cors'
         }).then(res => {
             let userInfo = res.data;
-            console.log("login successful")
-            console.log(userInfo);
+            // console.log("login successful")
+            // console.log(res.json());
             // setIsLoggedIn(True)
+            return res.json()
+        }).then(res => {
+            console.log(res)
+            storeLogin(res)
         }).catch(e => {
             console.log(`Register Error ${e}`)
         });
+    }
+
+    const storeLogin = async (token) => {
+        try {
+          await AsyncStorage.setItem(
+            '@loginKey',
+            
+            JSON.stringify(token)
+          );
+        } catch (error) {
+          // Error saving data
+          console.log('error saving data', error);
+        }
+    }
+    //retrieve token
+    const retrieveData = async () => {
+        try {
+          const value = await AsyncStorage.getItem('@loginKey');
+          if (value !== null) {
+            // We have data!!
+            console.log('the value is', value);
+          }
+          } catch (error) {
+            // Error retrieving data
+            console.log('Error retrieving data', error);
+          }
     }
     const logout = (email, password) => {
         console.log({email, password});
@@ -139,8 +170,9 @@ export const AuthProvider = ({children}) => {
         }
     }
     
+    
     return(
-        <AuthContext.Provider value={{register, getUser, getData,registerCaregiver, login, logout, apply}}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{register, getUser, getData,registerCaregiver, login, logout, apply, retrieveData}}>{children}</AuthContext.Provider>
     );
 
     

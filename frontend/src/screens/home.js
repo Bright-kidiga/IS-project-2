@@ -128,7 +128,7 @@ export default function Home({ navigation, props}) {
                    </TouchableOpacity>
                  </View>
                     <FlatList
-                        data={usersData || appData} 
+                        data={usersData} 
                         renderItem={({ item }) => (
                             <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("CaregiverProfile")}>
                                 <Image

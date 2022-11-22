@@ -175,7 +175,43 @@ class approvedApplicationCount(APIView):
         
         applications = self.get_queryset()
         return Response(applications)
-    
+
+class notApprovedApplicationCount(APIView): 
+    def get_queryset(self):
+        applications = Application.objects.filter(is_approved= False).count()
+        return applications
+    def get(self, request, *args, **kwargs):
+        
+        applications = self.get_queryset()
+        return Response(applications)
+
+class nurseCount(APIView):
+    def get_queryset(self):
+        nurses = Application.objects.filter(is_nurse= True).count()
+        return nurses
+    def get(self, request, *args, **kwargs):
+        
+        nurses = self.get_queryset()
+        return Response(nurses)   
+
+class babysitterCount(APIView):
+    def get_queryset(self):
+        babysitters = Application.objects.filter(is_babysitter= True).count()
+        return babysitters
+    def get(self, request, *args, **kwargs):
+        
+        babysitters = self.get_queryset()
+        return Response(babysitters)  
+
+class petsitterCount(APIView):
+    def get_queryset(self):
+        petsitters = Application.objects.filter(is_petcarer= True).count()
+        return petsitters
+    def get(self, request, *args, **kwargs):
+        
+        petsitters = self.get_queryset()
+        return Response(petsitters)
+
 
 # user= request.user
 # if user.is_caregiver == True :
