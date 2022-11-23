@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 
 const {width, height} = Dimensions.get('window')
 
-export default function application({ navigation }) {
+export default function Application ({ navigation }) {
     
     const {apply} = useContext(AuthContext); 
     

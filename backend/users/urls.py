@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import RegisterView,RegisterCaregiverView, LoginView, UserView, LogoutView, caregiverList, userList, ApplyView, jobsList, caregiverCount, clientCount, jobCount, applicationCount, approvedApplicationCount, nurseCount, babysitterCount, petsitterCount, notApprovedApplicationCount
+from .views import RegisterView,RegisterCaregiverView, LoginView, UserView, LogoutView, caregiverList, userList, ApplyView, jobsList, caregiverCount, clientCount, jobCount, applicationCount, approvedApplicationCount, nurseCount, babysitterCount, petsitterCount, notApprovedApplicationCount, findByID
 
 urlpatterns = [
     path('register', RegisterView.as_view()),
@@ -21,5 +21,7 @@ urlpatterns = [
     path('notApprovedApplicationCount', notApprovedApplicationCount.as_view()),#count of applications approved
     path('nurseCount', nurseCount.as_view()),#number of nurses
     path('petsitterCount', petsitterCount.as_view()),#number of petsitters
-    path('babysitterCount', babysitterCount.as_view())#number of babysitters
+    path('babysitterCount', babysitterCount.as_view()),#number of babysitters
+
+    path('findByID/<str:id>/', findByID.as_view()),#find user based on ID
 ]

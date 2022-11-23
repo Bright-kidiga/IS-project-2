@@ -6,19 +6,20 @@ import { AuthContext } from '../context/AuthContext';
 const {width, height} = Dimensions.get('window')
 
 
-export default function Home({ navigation, props}) {
-
+export default function Home ({ navigation, props}) {
+    const {getUser} = useContext(AuthContext);
     const [usersData,setUsersData]=useState([])
     const [fetchedState,setFetchedState]=useState(null);
     const [appData,setAppData]=useState([])
-    const [user,setUserData]=useState([])
+    const [user,setUser]=useState([])
     const [fetchState,setFetchState]=useState(null);
 
-    const getData=async()=>{
+    const getCaregivers=async()=>{
         try{
           const response=await fetch(`${BASE_URL}/caregiverlist`);
           const data=await response.json();
-          setUsersData(data)
+       
+          return data
         }
         catch(error){
           console.log(error)
@@ -28,47 +29,61 @@ export default function Home({ navigation, props}) {
         }
       }
     
-    useEffect(() => {
-        setFetchedState('loading')
-        setTimeout(()=>getData(),3000);
-      },[])
+    // useEffect(() => {
+    //     setTimeout(()=>getCaregivers(),3000);
+    //   },[])
     
-      const getCareData=async()=>{
+      const getCaregiverData=async()=>{
         try{
           const response=await fetch(`${BASE_URL}/applications`);
           const data=await response.json();
-          setAppData(data)
+          
+          return data
         }
         catch(error){
-          console.log(appData)
+          console.log(error)
         }
         finally{
           setFetchedState(null);
         }
       }
-    
+    const getCaregiverwithData = async() => {
+        try {
+          const caregivers = await getCaregivers();
+          const caregiverDatas = await getCaregiverData();
+
+          return caregivers.map((Caregiver) => {
+            const caregiverData = caregiverDatas.find(({cgiver}) => cgiver === Caregiver.id)
+            console.log(caregiverData)
+            return {...caregiverData, ...Caregiver}
+
+          })
+      }
+      catch(error){
+
+      }
+    }
+    // getCaregiverData().then((value) => {
+    //     setUsersData(value)
+    // })
+    // getUser().then((value) => {
+    //     setUser(value);
+    //   })
     useEffect(() => {
         setFetchedState('loading')
-        setTimeout(()=>getCareData(),3000);
+        getUser().then((value) => {
+            setUser(value)
+        })
       },[])
-  
-      const getUser=async()=>{
-          try{
-            const response=await fetch(`${BASE_URL}/user`);
-            const data=await response.json();
-            setUserData(data)
-          }
-          catch(error){
-            console.log(error)
-          }
-          finally{
-            setFetchState(null);
-          }
-        }
-      
+    useEffect(() => {
+        setFetchedState('loading')
+        getCaregiverwithData().then((value) => {
+            setUsersData(value)
+        })
+      },[])
       useEffect(() => {
           setFetchState('loading')
-          setTimeout(()=>getUse(),3000);
+          setTimeout(()=>getUser(),3000);
         },[])
 
       
@@ -77,10 +92,9 @@ export default function Home({ navigation, props}) {
                 <View style={styles.titleContainer}>
                    <View style={styles.grt}>
                     <Text style={styles.greeting}>Welcome back </Text>
-                    {
-                        fetchState ? <Text style={styles.name}>Loading Data...</Text> :
-                        user.map(_user=><Text style={styles.name} key={_user.id}>{_user.name}</Text>)
-                    }
+                    {/* {
+                        fetchState ? <Text style={styles.name}>Loading Data...</Text> : */}
+                        <Text style={styles.name}>{user.name}</Text>
                    </View>
                    <TouchableOpacity onPress={() => navigation.navigate("")}>
                     <View style={styles.prfBtn}>
@@ -128,9 +142,11 @@ export default function Home({ navigation, props}) {
                    </TouchableOpacity>
                  </View>
                     <FlatList
+                        keyExtractor={item => item.id}
                         data={usersData} 
                         renderItem={({ item }) => (
-                            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("CaregiverProfile")}>
+                        <TouchableOpacity style={styles.card}  onPress={() => navigation.navigate("CaregiverProfile", {profileId: item.id})}>
+                             
                                 <Image
                                     style={styles.profile}
                                     source={{
@@ -146,7 +162,7 @@ export default function Home({ navigation, props}) {
                                                 require('../../assets/images/placeholder.png')
                                             }
                                         />
-                                    <Text style= { styles.location}>West Madaraka</Text>
+                                    <Text style= { styles.location}>{item.location}</Text>
                                     </View>
                                 <View style={styles.rt}> 
                                     <Image
@@ -155,7 +171,7 @@ export default function Home({ navigation, props}) {
                                             require('../../assets/images/star.png')
                                         }
                                     />  
-                                    <Text style= { styles.rating}>4.5/5</Text>
+                                    <Text style= { styles.rating}>{item.id}</Text>
                                     <Text style= { styles.rate}>Ksh 20/Hr</Text>
                                 </View>
                                 </View>

@@ -3,8 +3,8 @@ import { View, Text, StatusBar, StyleSheet, Image, Dimensions, TouchableOpacity,
 
 const {width, height} = Dimensions.get('window')
 
-export default class HomeCaregiver extends Component {
-    render() {
+export default function HomeCaregiver ({ navigation, props}) {
+  
         // function getCaregiverList(){
         //     return fetch('localhost:8000/api/')
         //     .then((response) => response.json())
@@ -15,7 +15,7 @@ export default class HomeCaregiver extends Component {
         //     .catch((error) => {
         //       console.error(error);
         //     });
-        // }
+        
         return (
             <View style={styles.container}>
                  <View style={styles.titleContainer}>
@@ -47,16 +47,16 @@ export default class HomeCaregiver extends Component {
                     <Text style={styles.jobCount}>4.5/5</Text>
                 </View>
             <View style={styles.buttonContainer}>
-                   <TouchableOpacity onPress={() => navigation.navigate("application")}  >
+                   <TouchableOpacity onPress={() => navigation.navigate("apply")}  >
                     <View style={styles.btnContainer}>
-                        <Text style={styles.getStarted}>Log in</Text>
+                        <Text style={styles.getStarted}>Apply</Text>
                     </View>
                    </TouchableOpacity>
             </View>
             </View>
             </View>
         )}
- }
+ 
  const styles = StyleSheet.create({
     container: {
         flex: 1,

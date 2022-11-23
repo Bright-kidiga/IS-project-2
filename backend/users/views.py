@@ -54,8 +54,9 @@ class LoginView(APIView):
 
 class UserView(APIView):
     def get(self, request):
-        token = request.COOKIES.get('jwt')
-
+        token = request.headers.get('Authorization').split(' ')[1]
+        #return Response(token)
+        
         if not token:
             raise AuthenticationFailed('unauthenticated!')
 
@@ -212,6 +213,16 @@ class petsitterCount(APIView):
         petsitters = self.get_queryset()
         return Response(petsitters)
 
+class findByID(APIView):
+    def get_queryset(self, id):
+        users = User.objects.filter(id = id)
+        return users
+    def get(self, request, id, **kwargs):
+        
+       users = self.get_queryset(id)
+       serializer = UserSerializer(users, many=True)
+
+       return Response(serializer.data[0])
 
 # user= request.user
 # if user.is_caregiver == True :

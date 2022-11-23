@@ -3,6 +3,7 @@ import React, {createContext, useState} from 'react';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../config';
 import isLoggedIn from '../navigation/Appnav'
+import { NavigationHelpersContext } from '@react-navigation/native';
 
 export const AuthContext = createContext();
 
@@ -92,6 +93,8 @@ export const AuthProvider = ({children}) => {
         }).then(res => {
             console.log(res)
             storeLogin(res)
+            navigation.navigate("Home")
+            
         }).catch(e => {
             console.log(`Register Error ${e}`)
         });
@@ -110,12 +113,12 @@ export const AuthProvider = ({children}) => {
         }
     }
     //retrieve token
-    const retrieveData = async () => {
+    const retrieveToken = async () => {
         try {
           const value = await AsyncStorage.getItem('@loginKey');
           if (value !== null) {
             // We have data!!
-            console.log('the value is', value);
+            return JSON.parse(value);
           }
           } catch (error) {
             // Error retrieving data
@@ -144,9 +147,18 @@ export const AuthProvider = ({children}) => {
     }
     const getUser=async()=>{
         try{
-          const response=await fetch(`${BASE_URL}/userlist`);
+
+          const token = await retrieveToken()
+          const response=await fetch(`${BASE_URL}/user`,{
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token?.['jwt']}`, 
+              },
+          });
           const data=await response.json();
-          setUserData(data)
+          
+          return data
         }
         catch(error){
           console.log(error)
@@ -154,8 +166,9 @@ export const AuthProvider = ({children}) => {
         finally{
           setFetchState(null);
         }
-    }
-
+      }
+    
+    const [fetchState,setFetchState]=useState(null);
     const getData=async()=>{
         try{
           const response=await fetch(`${BASE_URL}/userlist`);
@@ -166,13 +179,26 @@ export const AuthProvider = ({children}) => {
           console.log(error)
         }
         finally{
-          setFetchedState(null);
+          setFetchState(null);
+        }
+    }
+    const getUserByID=async(id)=>{
+        try{
+          const response=await fetch(`${BASE_URL}/findByID/${id}`);
+          const data=await response.json();
+          return data;
+        }
+        catch(error){
+          console.log(error)
+        }
+        finally{
+          setFetchState(null);
         }
     }
     
     
     return(
-        <AuthContext.Provider value={{register, getUser, getData,registerCaregiver, login, logout, apply, retrieveData}}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{register, getUser, getData,registerCaregiver, login, logout, apply, retrieveToken, getUserByID}}>{children}</AuthContext.Provider>
     );
 
     

@@ -1,9 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useContext, useEffect } from 'react';
 import { View, Text, StatusBar, StyleSheet, Image, Dimensions, TouchableOpacity, Alert, TextInput, ScrollView } from 'react-native';
+import { AuthContext } from '../context/AuthContext';
+import { BASE_URL } from '../config';
 
 const {width, height} = Dimensions.get('window')
 
-export default function CaregiverProfile({ navigation }) {
+export default function CaregiverProfile({ navigation, route }) {
+    const {getUserByID} = useContext(AuthContext);
+    const [userProfile, setUserProfile] = useState({})
     // function getCaregiverList(){
     //     return fetch('localhost:8000/api/')
     //     .then((response) => response.json())
@@ -15,6 +19,42 @@ export default function CaregiverProfile({ navigation }) {
     //       console.error(error);
     //     });
     // }
+    useEffect(() => {
+        getCaregiverwithDataByID(route.params.profileId).then((res) => {
+            setUserProfile(res)
+        })
+      },[])
+    console.log(route.params)
+    const getCaregiverData=async()=>{
+        try{
+          const response=await fetch(`${BASE_URL}/applications`);
+          const data=await response.json();
+          
+          return data
+        }
+        catch(error){
+          console.log(error)
+        }
+        finally{
+        }
+      }
+    const getCaregiverwithDataByID = async(id) => {
+        try {
+          const caregiverDatas = await getCaregiverData();
+          const caregiver = await getUserByID(id);
+          
+          console.log(caregiver)
+          console.log(caregiverDatas)
+          const caregiverData = caregiverDatas.find(({cgiver}) => cgiver === caregiver.id)
+            
+            console.log(caregiverData)
+            return {...caregiverData, ...caregiver}
+
+      }
+      catch(error){
+          console.log(error)
+      }
+    }
     return (
         <View style={styles.container}>
            <View style={styles.profileContainer}>
@@ -25,7 +65,7 @@ export default function CaregiverProfile({ navigation }) {
                             }}
                         />
             <View style={styles.profileInfo}>
-                 <Text style= { styles.name}>Padme Amidala</Text> 
+                 <Text style= { styles.name}>{userProfile.name}</Text> 
                  <View style={styles.location}>
                  <Image
                             style={styles.loc}
@@ -33,7 +73,7 @@ export default function CaregiverProfile({ navigation }) {
                                 require('../../assets/images/placeholder.png')
                                 }
                  />
-                 <Text style={styles.loci}>West Madaraka</Text>
+                 <Text style={styles.loci}>{userProfile.location}</Text>
                  </View>
             <View style={styles.performance}>
                 <View style={styles.icon}>
@@ -65,7 +105,7 @@ export default function CaregiverProfile({ navigation }) {
                 </View>
             </View> 
             <View style={styles.analytics}>
-
+               <Text>{userProfile.location}</Text>
             </View>         
             </View>
            </View>

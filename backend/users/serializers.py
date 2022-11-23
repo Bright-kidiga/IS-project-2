@@ -6,7 +6,7 @@ from .models import User, Application, Jobs
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'name', 'email', 'password']
+        fields = ['id', 'name', 'email', 'password', 'is_caregiver']
         extra_kwargs = {
             'password': {'write_only': True,}
         }
@@ -40,12 +40,14 @@ class ImageSerializer(serializers.ModelSerializer):
 class ApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Application
-        fields = ['cgiver', 'id', 'description', 'id_photo', 'good_conduct', 'age', 'phone', 'is_nurse', 'is_babysitter', 'is_petcarer', 'is_approved']
+        fields = ['cgiver', 'id', 'description', 'id_photo', 'location', 'good_conduct', 'age', 'phone', 'is_nurse', 'is_babysitter', 'is_petcarer', 'is_approved']
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jobs
         fields = ['c_giver', 'id', 'review', 'rating', 'location', 'timeStarted', 'timeEnded', 'nurse', 'babysitter', 'petcarer']
+
+
 
 # class CaregiverCountSerializer(serializers.ModelSerializer):
 #     user_count = serializers.SerializerMethodField()

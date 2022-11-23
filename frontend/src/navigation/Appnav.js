@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, Header } from '@react-navigation/stack';
 import Login from '../screens/Login';
@@ -9,23 +9,30 @@ import SignupCare from '../screens/signupcare';
 import homeCaregiver from '../screens/homeCaregiver';
 import Home from '../screens/home';
 import CaregiverProfile from '../screens/CaregiverProfile';
-import application from '../screens/application';
+import apply from '../screens/Application';
 import { AuthProvider, AuthContext } from '../context/AuthContext';
 
 const Stack = createStackNavigator();
 
 export default function App (){
-  const {retrieveData} = useContext(AuthContext);
-     
+  const {retrieveToken, getUser} = useContext(AuthContext);
+  const [isLoggedIn,setIsLoggedIn] =useState(false) 
+  const [isCaregiver,setIsCaregiver] = useState(false)
   const Navigator = () => {
-      // retrieveData(value);
-      // if (value = null){
-      //   isLoggedIn = false;
-      // }
-      // else{
-      //   isLoggedIn = true;
-      // }
-      const isLoggedIn = false;
+      retrieveToken().then((value) => {
+
+            setIsLoggedIn(!!value);
+            console.log(value, isLoggedIn);
+      })
+      useEffect(() => {
+        // setFetchedState('loading')
+        getUser().then((value) => {
+          setIsCaregiver(value?.is_caregiver)
+          console.log(isCaregiver)
+          console.log(value)
+          console.log(value?.is_caregiver)
+        })
+      },[])
       
     if (!isLoggedIn){
       return (
@@ -59,6 +66,8 @@ export default function App (){
     }
     return (
       <Stack.Navigator>
+       {!isCaregiver && (<>
+       
          <Stack.Screen
           name= "home"
           component={Home}
@@ -69,6 +78,8 @@ export default function App (){
           component={CaregiverProfile}
           // options={{headerShown: false}}
         />
+        </>)}
+      {isCaregiver && (<>
         <Stack.Screen
           name= "homeCaregiver"
           component={homeCaregiver}
@@ -76,9 +87,10 @@ export default function App (){
         />
         <Stack.Screen
           name= "Caregiver Application"
-          component={application}
+          component={apply}
           // options={{headerShown: false}}
         />
+      </>)}
       </Stack.Navigator>
     )
   }
