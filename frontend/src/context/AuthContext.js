@@ -196,7 +196,26 @@ export const AuthProvider = ({children}) => {
         }
     }
     
-    
+    const jobData = async() => {
+        console.log({c_giver, id, review, rating, location, timeStarted, timeEnded, nurse, babysitter, petcarer});
+        fetch(`${BASE_URL}/hireJob`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({
+                c_giver, id, review, rating, location, timeStarted, timeEnded, nurse, babysitter, petcarer
+            }),
+            mode: 'cors'
+        }).then(res => {
+            let userInfo = res.data;
+            console.log("Hire successful")
+            console.log(userInfo);
+        }).catch(e => {
+            console.log(`Register Error ${e}`)
+        });
+    }
     return(
         <AuthContext.Provider value={{register, getUser, getData,registerCaregiver, login, logout, apply, retrieveToken, getUserByID}}>{children}</AuthContext.Provider>
     );

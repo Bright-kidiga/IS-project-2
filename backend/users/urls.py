@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import RegisterView,RegisterCaregiverView, LoginView, UserView, LogoutView, caregiverList, userList, ApplyView, jobsList, caregiverCount, clientCount, jobCount, applicationCount, approvedApplicationCount, nurseCount, babysitterCount, petsitterCount, notApprovedApplicationCount, findByID
+from .views import RegisterView,RegisterCaregiverView, LoginView, postJob, UserView, LogoutView, caregiverList, userList, ApplyView, jobsList, caregiverCount, clientCount, jobCount, applicationCount, approvedApplicationCount, nurseCount, babysitterCount, petsitterCount, notApprovedApplicationCount, findByID
 
 urlpatterns = [
     path('register', RegisterView.as_view()),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('logout', LogoutView.as_view()),
     path('caregiverlist', userList.as_view()),
     path('apply', ApplyView.as_view()),
+    path('hireJob', postJob.as_view()),
 
     path('applications', caregiverList.as_view()),#list of applications
     path('jobs', jobsList.as_view()),#list of jobs

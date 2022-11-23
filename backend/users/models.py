@@ -90,11 +90,11 @@ class Application(models.Model):
 
 class Jobs(models.Model):
     c_giver = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    review = models.TextField(max_length=500)
-    rating = models.FloatField()
+    review = models.TextField(max_length=500, blank=True, null=True)
+    rating = models.FloatField( blank=True, null=True)
     location = models.TextField(max_length=300, blank=True, null=True)
     timeStarted = models.DateTimeField(auto_now_add=True)
-    timeEnded = models.DateTimeField()
+    timeEnded = models.DateTimeField(auto_now_add=True)
     
     #job categories
     nurse= models.BooleanField(default=False)

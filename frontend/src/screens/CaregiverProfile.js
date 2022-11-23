@@ -101,11 +101,11 @@ export default function CaregiverProfile({ navigation, route }) {
                                 require('../../assets/images/hourglass.png')
                             }
                  />
-                 <Text>Punctuality</Text>
+                 <Text>Age {userProfile.age}</Text>
                 </View>
             </View> 
             <View style={styles.analytics}>
-               <Text>{userProfile.location}</Text>
+               <Text style={styles.loci}>{userProfile.description}</Text>
             </View>         
             </View>
            </View>

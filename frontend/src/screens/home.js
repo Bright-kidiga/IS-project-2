@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 const {width, height} = Dimensions.get('window')
 
 
-export default function Home ({ navigation, props}) {
+export default function Home({ navigation, props}) {
     const {getUser} = useContext(AuthContext);
     const [usersData,setUsersData]=useState([])
     const [fetchedState,setFetchedState]=useState(null);

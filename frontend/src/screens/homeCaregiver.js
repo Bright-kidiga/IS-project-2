@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useContext, useEffect} from 'react';
 import { View, Text, StatusBar, StyleSheet, Image, Dimensions, TouchableOpacity, Alert, TextInput, ScrollView } from 'react-native';
-
+import {AuthContext} from '../context/AuthContext';
 const {width, height} = Dimensions.get('window')
 
 export default function HomeCaregiver ({ navigation, props}) {
-  
+
+    const {getUser, getUserByID} = useContext(AuthContext);  
+    const [user,setUser]=useState([])
         // function getCaregiverList(){
         //     return fetch('localhost:8000/api/')
         //     .then((response) => response.json())
@@ -15,13 +17,18 @@ export default function HomeCaregiver ({ navigation, props}) {
         //     .catch((error) => {
         //       console.error(error);
         //     });
-        
+        useEffect(() => {
+           
+            getUser().then((value) => {
+                setUser(value)
+            })
+          },[])
         return (
             <View style={styles.container}>
                  <View style={styles.titleContainer}>
                    <View style={styles.grt}>
                     <Text style={styles.greeting}>Welcome back </Text>
-                    <Text style={styles.name}>..name.. </Text>
+                    <Text style={styles.name}>{user.name}</Text>
                    </View>
                     <TouchableOpacity>
                     <Image
@@ -39,7 +46,7 @@ export default function HomeCaregiver ({ navigation, props}) {
                     <Text style={styles.jobCount}>1244</Text>
                 </View>
                 <View style={styles.status}>
-                    <Text style={styles.jobCount}>Approved</Text>
+                    <Text style={styles.jobCount}></Text>
                 </View>
               </View>
                 <View style={styles.jobs}>
@@ -47,7 +54,7 @@ export default function HomeCaregiver ({ navigation, props}) {
                     <Text style={styles.jobCount}>4.5/5</Text>
                 </View>
             <View style={styles.buttonContainer}>
-                   <TouchableOpacity onPress={() => navigation.navigate("apply")}  >
+                   <TouchableOpacity onPress={() => navigation.navigate("apply", {profileId: user.id})}  >
                     <View style={styles.btnContainer}>
                         <Text style={styles.getStarted}>Apply</Text>
                     </View>
@@ -69,18 +76,18 @@ export default function HomeCaregiver ({ navigation, props}) {
         height: 70,
         verticalAlign: 'middle',
         flexDirection: 'row',
-        width: width,
+        // width: width,
     },
     profile: {
         height: 70,
         width: 70,
-        marginRight: 10,
+        marginRight: 0,
         marginTop: 30,
         borderRadius: 50,
     },
     grt: {
         marginTop: 40,
-        marginRight: 160
+        marginRight: 80
     },
     greeting: {
         fontSize: 20,

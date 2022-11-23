@@ -90,6 +90,7 @@ class ApplyView(APIView):
 class postJob(APIView):
     def post(self, request):
         serializer = JobSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
 

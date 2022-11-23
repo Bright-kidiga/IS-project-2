@@ -9,7 +9,7 @@ import SignupCare from '../screens/signupcare';
 import homeCaregiver from '../screens/homeCaregiver';
 import Home from '../screens/home';
 import CaregiverProfile from '../screens/CaregiverProfile';
-import apply from '../screens/Application';
+import application from '../screens/Application';
 import { AuthProvider, AuthContext } from '../context/AuthContext';
 
 const Stack = createStackNavigator();
@@ -87,7 +87,7 @@ export default function App (){
         />
         <Stack.Screen
           name= "Caregiver Application"
-          component={apply}
+          component={application}
           // options={{headerShown: false}}
         />
       </>)}

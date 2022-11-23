@@ -1,10 +1,10 @@
-import React, { Component,  useState, useContext } from 'react';
+import React, { Component, useState, useContext, useEffect} from 'react';
 import { View, Text, Switch, StatusBar, StyleSheet, Image, Dimensions, TouchableOpacity, Alert, TextInput, ScrollView } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
 
 const {width, height} = Dimensions.get('window')
 
-export default function Application ({ navigation }) {
+export default function Application ({ navigation, route }) {
     
     const {apply} = useContext(AuthContext); 
     
@@ -20,6 +20,15 @@ export default function Application ({ navigation }) {
     const toggleNurse = () => setIsNurse(previousState => !previousState);
     const toggleBabysitter = () => setIsBabysitter(previousState => !previousState);
     const togglePetcarer = () => setIsPetcarer(previousState => !previousState);
+
+    const [userProfile, setUserProfile] = useState({})
+    const {getUser, getUserByID} = useContext(AuthContext);
+
+    useEffect(() => {
+        getUserByID(route.params.profileId).then((res) => {
+            setUserProfile(res)
+        })
+      },[])
     return (
         <View style={styles.container}>  
            <View style={styles.application}>
@@ -87,7 +96,7 @@ export default function Application ({ navigation }) {
            </View>
            <View style={styles.buttonContainer}>
                    <TouchableOpacity onPress={() => apply(
-                     cgiver, description, age, phone, is_nurse, is_petcarer, is_babysitter
+                     cgiver= profileId, description, age, phone, is_nurse, is_petcarer, is_babysitter
                    )}  >
                     <View style={styles.getStartedContainer}>
                         <Text style={styles.getStarted}>Make Application</Text>
